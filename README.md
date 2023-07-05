@@ -1,0 +1,1 @@
+This repository contains exercises related to regression modelling. These exercises are conducted using a database of real estate data from Zillow found on the Codeup server.
