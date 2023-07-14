@@ -181,6 +181,9 @@ def visualize_model_performance(results_df):
 ################# EVALUATE BEST MODEL FUNCTION ##################
 
 def evaluate_best_model(X_train, y_train, X_validate, y_validate, X_test, y_test):
+    """
+    Rebuilds the best model and evaluates its performance on the test data then displays a dataframe with the results
+    """
     #Make the thing
     lassomodel = LassoLars(alpha=.01)
     #Fit the thing
@@ -220,23 +223,21 @@ def evaluate_best_model(X_train, y_train, X_validate, y_validate, X_test, y_test
     
 def visualize_best_model():
     """
-    Creates a graph that plots the baseline, model line, and average data point
+    Creates a graph that plots the baseline, model line, and average data point, displays the RMSE and TSS as well
     """
 
     # Define the x-axis range
     x = np.linspace(200, 7500, 100)
-
     # Set the slope of the line to be 45 degrees across the chart
     slope = 1000000 / (7500 - 200)
-
     # Compute the corresponding y-values
     y = slope * (x - 200)
-
     # # Create the figure and axes
     fig, ax = plt.subplots(figsize=(15, 10))
-
+    # Set title
+    plt.title('Model predictions are 22% closer than baseline', weight='bold', fontsize=20)
     # Plot the diagonal line with the desired slope
-    ax.plot(x, y, linestyle='-', color='red', label='LassoLars_a.01 Model', linewidth=4)
+    ax.plot(x, y-70000, linestyle='-', color='red', label='LassoLars_a.01 Model', linewidth=4)
 
     # Plot the dotted line at 368500
     ax.axhline(y=368500, linestyle=':', color='blue', label='Average Home Value', linewidth=4)
@@ -250,28 +251,31 @@ def visualize_best_model():
     ax.set_yticks([])
 
     # Add labels and a legend
-    ax.set_xlabel('Features')
-    ax.set_ylabel('Home Value')
+    ax.set_xlabel('Features', weight= 'bold', fontsize=12)
+    ax.set_ylabel('Home Value', weight= 'bold', fontsize=12)
     ax.legend()
 
     # Green vertical line that represents RMSE across the middle third of the screen
-    ax.axvline(x=4050, ymin=0.51, ymax=0.61, color='limegreen', linewidth=5)
+    ax.axvline(x=4050, ymin=0.445, ymax=0.60, color='limegreen', linewidth=5)
 
     # blue vertical line that represents TSS across the middle third of the screen
-    ax.axvline(x=3950, ymin=0.36, ymax=0.61, color='blue', linewidth=5)
+    ax.axvline(x=3950, ymin=0.36, ymax=0.60, color='blue', linewidth=5)
 
     # Add a text box at position
-    ax.text(2600, 650000, 'RMSE = $208,000', fontsize=12, weight='bold', color='yellow', bbox=dict(facecolor='limegreen', edgecolor='limegreen'))
+    ax.text(2800, 630000, 'RMSE = $208K', fontsize=12, weight='bold', color='yellow', bbox=dict(facecolor='limegreen', edgecolor='limegreen'))
+
     # Add a text box at position
-    ax.text(2600, 570000, ' TSS = $235,000  ', fontsize=12, weight='bold', color='yellow', bbox=dict(facecolor='blue', edgecolor='blue'))
+    ax.text(2800, 570000, ' TSS = $254K  ', fontsize=12, weight='bold', color='yellow', bbox=dict(facecolor='blue', edgecolor='blue'))
+
+    # Add a text box at position
+    ax.text(3400, 810000, 'Average Home Value', fontsize=12, weight='bold', color='white', bbox=dict(facecolor='grey', edgecolor='grey'))
 
     # Plot a large dot
     large_dot_x = 3995
     large_dot_y = slope * (large_dot_x - 200) + 207884
-    ax.plot(large_dot_x, large_dot_y, marker='o', markersize=35, color='orange', label='Large Dot')
-
+    ax.plot(large_dot_x, large_dot_y, marker='o', markersize=45, color='orange', label='Large Dot')
     plt.figure(figsize=(40,20))
 
     # Display the plot
+    print('\n')
     plt.show()
-

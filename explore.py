@@ -9,6 +9,9 @@ import seaborn as sns
 ############# HOMES BEFORE AFTER OUTLIERS FUNCTION ################
 
 def homes_before_after_outliers(zillow_raw, zillow_df):
+    """
+    Displays two subplots charting the distribution of the zillow_raw.home_values and the train.home_values columns
+    """
     # Create the figure and axes
     fig, axes = plt.subplots(1, 2, figsize=(12, 6))
 
@@ -31,6 +34,9 @@ def homes_before_after_outliers(zillow_raw, zillow_df):
 ########### STATS TEST PEARSONS FUNCTION ##############
 
 def stat_test_pearsons(df, predictor, target):
+    """
+    Conducts a pearsons r stats test on two continuous columns and displays the results
+    """
     # Set the alpha value
     a=.05
 

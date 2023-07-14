@@ -76,6 +76,20 @@ def prep_zillow(df):
     return df
 
 
+############################ WRANGLE ZILLOW RAW FUNCTION ############################
+
+def wrangle_zillow_raw():
+    """
+    Retrieves the raw zillow data and cleans it for use in exploration visualizations
+    """
+       zillow_raw = acquire_zillow()
+    zillow_raw = zillow_raw.rename(columns={'taxvaluedollarcnt': 'home_value', 'calculatedfinishedsquarefeet': 'square_feet'})
+    zillow_raw = zillow_raw[['home_value', 'square_feet']]
+    zillow_raw = zillow_raw.dropna()
+    zillow_raw.drop_duplicates(inplace=True)
+    return zillow_raw
+    
+
 ############################ WRANGLE ZILLOW FUNCTION ############################
 
 def wrangle_zillow():
@@ -121,7 +135,9 @@ def split_zillow(df):
     
     
 def x_y_split(train, validate, test):
-    # Separate the features (X) and target variable (y) for the train, validate, and test sets
+    """
+    Separate the features (X) and target variable (y) for the train, validate, and test sets
+    """
     X_train, y_train = train.drop(columns='home_value'), pd.DataFrame(train.home_value)
     X_validate, y_validate = validate.drop(columns='home_value'), pd.DataFrame(validate.home_value)
     X_test, y_test = test.drop(columns='home_value'), pd.DataFrame(test.home_value)
@@ -157,8 +173,11 @@ def split_clean_zillow(df):
 
     
 def identify_fips():
-    # Bring in zillow so we can append the county and state to the listings
+    """
+    Wrangles zillow data and a csv with state and county data and merges them based on the fips data. Returns a dataframe.
+    """
     import wrangle
+    # Bring in zillow so we can append the county and state to the listings
     zdf = wrangle.acquire_zillow()
 
     # Bring in the home id and fips info so that these homes can be identified
@@ -175,3 +194,16 @@ def identify_fips():
     locations_df.shape
     
     return locations_df
+
+
+############## CHECK NULLS DISPLAY FIPS DF FUNCTION #######################
+
+def check_nulls_display_fips_df(fips_df):
+    """
+    Checks the fips_df for nulls and prints the results, then displays the dataframe
+    """
+    print('\nCount of all nulls in the dataframe by column:')
+    display(fips_df.isnull().sum())
+    print('\nNo nulls were found.\n\nThis is a truncated display of the transaction id dataframe with state and county info matched by fips code:')
+    display(fips_df)
+ 

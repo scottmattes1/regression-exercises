@@ -1,24 +1,16 @@
 
 ***
-[[Project Description]]
 [[Objectives]]
-[[Project Planning]]
+[[Project Plan]]
 [[Key Findings]]
+[[Modeling]]
 [[Recommendations]]
 [[Next Steps]]
 [[Steps to Reproduce]]
 [[Data Exploration]]
-[[Modeling]]
 [[Conclusion]]
 [[Data Dictionary]]
 ___
-
-
-
-Project Description
------------------
-Follow the data science pipeline to find insights to present to the Zillow Data Science team on how to improve model performance to predict home values; identify the location of each transaction. Produce a GitHub repository and a final notebook from which to present findings.
-
 
 
 Objectives
@@ -29,6 +21,12 @@ For the Zillow Data Science team:
 
 
 
+Project Plan
+-----------------
+Follow the data science pipeline to find insights to present to the Zillow Data Science team on how to improve model performance to predict home values; identify the location of each transaction. Produce a GitHub repository and a final notebook from which to present findings.
+
+
+
 Key Findings
 -----------------
 1. The bedrooms relationship to home_value is extremely weak yet significant¶
@@ -36,6 +34,11 @@ Key Findings
 2. The square_feet relationship to home_value is very strong and significant
 
 3. Bedrooms and square_feet have some degree of multicolinearity, however there is high variance in the relationship so both features will still be taken to modeling
+
+
+Modeling
+-----------------------
+The best performing regression model on this data set was a LassoLars model with an alpha of .01 which performed on test data with an RMSE of $207,884 and an R squared value of .22
 
 
 
@@ -49,31 +52,34 @@ Recommendations
 
 
 
-Modeling
------------------------
-The best performing regression model on this data set was a LassoLars model with an alpha of .01 which performed on test data with an RMSE of $207,884
-
-
-
-
 Next Steps
 -----------------
-To further improve model performance, feature selection methods may be used to determine other columns in the data that can add predictive power to future models.
+To further improve model performance, feature selection methods may be used to determine other columns in the data that can add predictive power to future models
+
+It may be useful to experiment with trimming outlier values from other model features as well, besides just the home value
+
+If desirable to the Zillow Data Science team, develop a model that works well at predicting extreme target values (potentially a clustering model)
 
 
 
 Steps to Reproduce
 -----------------------
-env.py file with credentials to access the codeup database
-clone this repository
-copy the exact imports used in the final notebook and run the code
+1. Make an env.py file with your credentials to access the codeup database
+2. clone this repository to a local directory
+3. Follow the hyperlink in the 'State and County Data' section at the bottom of the notebook and 'curl -O' the raw file into your local directory
+4. Run all cells of the notebook
 
-If you would like to reproduce the dataframe which matches transaction id's to county and state information, follow the hyperlink given in the 'State and County' data section of the notebook and save it to the directory where the final_notebook is stored, then, run the cell blocks below the 'State and County' markdown
-        
+
+
+Conclusion
+-----------------------
+The project objectives were met: recommendations to build a better model were presented and state and county information were matched and added to the list of 2017 home transactions.
+
+
 
 Data Dictionary
 ------------------
-Column Name                  Description
+##Column Name           |       Description
 ------------------------------------------------------------------------------
 home_value                    The taxable value of each home. Given as a float.
 square_feet                   The square footage of each home. Given as a float.
