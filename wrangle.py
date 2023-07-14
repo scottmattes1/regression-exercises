@@ -82,7 +82,7 @@ def wrangle_zillow_raw():
     """
     Retrieves the raw zillow data and cleans it for use in exploration visualizations
     """
-       zillow_raw = acquire_zillow()
+    zillow_raw = acquire_zillow()
     zillow_raw = zillow_raw.rename(columns={'taxvaluedollarcnt': 'home_value', 'calculatedfinishedsquarefeet': 'square_feet'})
     zillow_raw = zillow_raw[['home_value', 'square_feet']]
     zillow_raw = zillow_raw.dropna()
